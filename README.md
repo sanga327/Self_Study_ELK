@@ -88,3 +88,64 @@
   - 인스턴스 태그 설정
   - http, tcp 통신을 위한 방화벽 포트 설정
 
+**5) elasticsearch 클러스터 구성**
+
+- 클러스터 아키텍쳐 구성도
+- 추가 노드를 위한 GCP 인스턴스 생성
+    - VM 이미지 스냅샷을 이용
+    - 클러스터링을 위한 방화벽 태그 설정
+    - /etc/hosts 에서 호스트명 설정
+- 3개 노드로 클러스터 구성
+    - 실행 로그에서 바인딩 되는 과정 확인
+    - _ cat/nodes 명령으로 구성된 노드 정보 확인
+
+**6-1) 클러스터 보안 설정 (1): 노드간 통신에 TLS 적용**
+
+- elasticsearch.yml 에서 보안 기능 설정
+    - xpack.security - 보안 기능 활성
+    - transport.ssl - 노드들간의 통신에 TLS 보안 적용
+- 암호화 / 복호화 키 생성
+    - 키를 만들기 위해 elastic 에서 제공하는 도구
+        elasticsearch-certutil 사용
+    - PKCS#12 (.p12) 방식의 키 저장소 생성
+    - 키 저장소를 이용한 private 키 생성
+- elasticsearch-keystore 사용
+    - elasticsearch.yml 에 입력할 수 없는 민감한 환경변수 값 (패스워드 등)을 저장하기 위한 도구
+
+
+**6-2) 클러스터 보안 설정 (2): 사용자 - 암호 설정**
+
+- node-2, node-3 노드에 보안 적용
+    - node-1에서 만든 키 파일을 scp 명령을 통해 전송
+    - elasticsearch-keystore 등을 이용하여 node-1과 동일하게 보안 설정 적용
+- user / password 설정
+    - elastic-setup-password 기능을 이용하여 사용자 계정/ 암호 정보를 클러스터 설정에 저장 (Native Realm)
+    - elasticsearch-users 기능을 이용하여 사용자 계정/암호 정보를 파일에 저장 (File Realm)
+
+**7-1) Kibana 시작하기: 설치 및 실행**
+
+- 전체 클러스터 아키텍쳐 리뷰
+- Kibana 환경 설정
+    - server.host: KB 네트워크 정보
+    - server.name: KB 프로세스 네임
+    - elasticsearch.hosts: ES 클러스터 접속 정보
+    - kibana-keystore를 이용한 ES 사용자/암호 입력
+- GCP 방화벽 설정
+    - KB 접속 포트 (:5601) 오픈
+- GCP 인스턴스 다시 생성
+    - 문제 원인 파악과 해결을 위해 진행한 과정 설명
+- Kibana UI 에서 새로운 사용자 생성
+
+**7-2) Kibana 시작하기: pm2를 이용한 데몬 실행**
+
+- ES를 백그라운드로 실행하는 방법 복습
+- Kibana를 시작하는 다양한 방법
+    - bin/kibana(.bat) 스크립트 실행
+    - node.js를 이용하여 src/cil/cil.js 실행
+- pm2를 이용해서 kibana를 데몬으로 실행하기
+    - nvm을 이용한 노드 버전 관리
+    - pm2 설치 및 실행 옵션 설명
+- kibana를 데몬으로 실행/종료 하기 위한 스크립트 파일 생성
+
+
+
