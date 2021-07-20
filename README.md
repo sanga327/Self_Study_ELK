@@ -53,10 +53,10 @@
 
 ### 3. Logstash 설치 및 활용
   
-(1) Logstash 설치 및 실행  
-(2) Logstash filter 설정
-(3) Filebeat -> Logstash -> Elasticsearch
-(4) 인덱스 재색인 - 필드 매핑 개선 / 인덱스 템플릿과 스크립트 사용
+(1) Logstash 설치 및 실행    
+(2) Logstash filter 설정  
+(3) Filebeat -> Logstash -> Elasticsearch  
+(4) 인덱스 재색인 - 필드 매핑 개선 / 인덱스 템플릿과 스크립트 사용  
 
 
 ---
