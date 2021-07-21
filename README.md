@@ -60,4 +60,9 @@
 
 
 ---
+### 4. Kibana
+
+(1) Kibana 살펴보기 -Kibana Index Pattern - Kibana 인덱스 패턴 생성 - 인덱스 패턴의 필드 속성 살펴보기
+(2) Kibana 대시보드 만들기 - Metric, Bar, Pie, Treemap / Maps를 이용한 위치정보 표시 / 컨트롤 도구, 도큐먼트 목록
+
 
